@@ -1,5 +1,8 @@
 package main;
 
-public class Cell {
+import javax.swing.JPanel;
+
+public class Cell extends JPanel 
+{
 
 }
