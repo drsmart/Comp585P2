@@ -13,10 +13,11 @@ public class Board extends JPanel
 	private int cellHeight;
 	private int cellWidth;
 	private int mineCount;
-	
+	private CellListener list;
 	public Board(int rows, int cols)
 	{
 		super();
+		list = new CellListener();
 		rowCount = rows;
 		colCount = cols;
 		this.setLayout(new GridLayout(rowCount, colCount));
@@ -29,7 +30,9 @@ public class Board extends JPanel
 		{
 			for(int col = 0; col < colCount; col++)
 			{
-				this.add(new Cell(row, col));
+				Cell c = new Cell(row, col);
+				c.addMouseListener(list);
+				this.add(c);
 			}
 		}
 	}
