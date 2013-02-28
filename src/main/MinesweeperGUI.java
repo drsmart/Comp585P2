@@ -8,12 +8,14 @@ public class MinesweeperGUI extends JFrame
 {
 	private static final long serialVersionUID = 42L;
 	private Container container;
+	private Board board;
 	
 	public MinesweeperGUI()
 	{
 		super();
 		container = this.getContentPane();
-		
+		board = new Board(10,10);
+		this.add(board);
 		this.pack();
 		this.setVisible(true);
 	}
