@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 public class CellListener implements MouseListener 
 {
 	private Board board;
+	private Cell current;
 	
 	public CellListener(Board board)
 	{
@@ -20,7 +21,7 @@ public class CellListener implements MouseListener
 	@Override
 	public void mouseEntered(MouseEvent e) 
 	{
-		
+		current = (Cell)e.getSource();
 	}
 
 	@Override
@@ -32,33 +33,45 @@ public class CellListener implements MouseListener
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-
+//		Cell c = (Cell)e.getSource();
 //		c.pressed();
-//		board.repaint();
-//		
+//		board.repaint();	
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
-		int click = e.getButton();
-		Cell c = (Cell)e.getSource();
+		release(e.getButton());
+	}
+
+	private void release(int click)
+	{
 		
 		if (click == MouseEvent.BUTTON1)
 		{
 			//Left Click
-			c.uncover();
+			current.uncover();
+			isGameOver(current);
 		}
 		else if (click == MouseEvent.BUTTON3)
 		{
 			//Right Click
-			c.mark();
+			current.mark();
 		}
-		
 		
 		board.repaint();
 	}
-
-
+	
+	private void isGameOver(Cell current)
+	{
+		if (current.isMined())
+		{
+			System.out.println("Lose");
+		}
+		else if (board.allNonMinesUncovered())
+		{
+			System.out.println("Win");
+		}
+	}
 
 }

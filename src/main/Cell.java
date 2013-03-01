@@ -43,6 +43,16 @@ public class Cell extends JPanel
 		this.mined = mined;
 	}
 	
+	public boolean isMined()
+	{
+		return mined;
+	}
+	
+	public boolean isCovered()
+	{
+		return covered;
+	}
+	
 	public void paintComponent(Graphics g)
 	{
 		if (bgImg != null)
