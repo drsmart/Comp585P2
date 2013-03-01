@@ -4,39 +4,46 @@ import java.awt.event.MouseListener;
 
 public class CellListener implements MouseListener 
 {
+	private Board board;
+	
+	public CellListener(Board board)
+	{
+		this.board = board;
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		Cell c = (Cell)e.getSource();
+		c.pressed();
+		board.repaint();
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
+		Cell c = (Cell)e.getSource();
+		c.uncover();
+		board.repaint();
 	}
 
 

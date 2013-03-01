@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 
 import javax.swing.JFrame;
@@ -14,8 +15,9 @@ public class MinesweeperGUI extends JFrame
 	{
 		super();
 		container = this.getContentPane();
+		container.setLayout(new BorderLayout());
 		board = new Board(10,10);
-		this.add(board);
+		container.add(board, BorderLayout.CENTER);
 		this.pack();
 		this.setVisible(true);
 	}

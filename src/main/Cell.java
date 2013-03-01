@@ -15,6 +15,7 @@ public class Cell extends JPanel
 	private int width;
 	private int height;
 	private boolean mined;
+	private boolean covered;
 	private int adjCount;
 	private Image bgImg;
 	
@@ -22,7 +23,8 @@ public class Cell extends JPanel
 	{
 		row = x;
 		col = y;
-		JLabel l = new JLabel();
+		mined = false;
+		covered = true;
 		ImageIcon img = new ImageIcon(this.getClass().getResource("images/blank.gif"));
 		width = img.getIconWidth();
 		height = img.getIconHeight();
@@ -31,9 +33,36 @@ public class Cell extends JPanel
 		
 	}
 	
+	public void setMined(boolean mined)
+	{
+		this.mined = mined;
+	}
+	
 	public void paintComponent(Graphics g)
 	{
 		if (bgImg != null)
 			g.drawImage(bgImg, 0, 0, this);
+	}
+	
+	public void uncover()
+	{
+		String pic = "";
+		covered = false;
+		if (mined && !covered)
+			pic = "bombdeath.gif";
+		else 
+			pic = "open0.gif";
+		
+		bgImg = (new ImageIcon(this.getClass().getResource("images/" + pic))).getImage();
+	}
+	
+	public void mark()
+	{
+		
+	}
+	
+	public void pressed()
+	{
+		bgImg = (new ImageIcon(this.getClass().getResource("images/open0.gif"))).getImage();
 	}
 }
