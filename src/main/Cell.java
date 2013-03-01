@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 public class Cell extends JPanel 
 {
+	enum CellState {UNMARKED, FLAGGED, UNKNOWN}
+	
 	private int row;
 	private int col;
 	private int width;
@@ -18,6 +20,8 @@ public class Cell extends JPanel
 	private boolean covered;
 	private int adjCount;
 	private Image bgImg;
+	private CellState cellState;
+	
 	
 	public Cell(int x, int y)
 	{
@@ -25,6 +29,7 @@ public class Cell extends JPanel
 		col = y;
 		mined = false;
 		covered = true;
+		cellState = CellState.UNMARKED;
 		ImageIcon img = new ImageIcon(this.getClass().getResource("images/blank.gif"));
 		width = img.getIconWidth();
 		height = img.getIconHeight();
@@ -46,23 +51,52 @@ public class Cell extends JPanel
 	
 	public void uncover()
 	{
-		String pic = "";
-		covered = false;
-		if (mined && !covered)
-			pic = "bombdeath.gif";
-		else 
-			pic = "open0.gif";
+		if (cellState == CellState.UNMARKED)
+		{
+			String pic = "";
+			covered = false;
+			if (mined && !covered)
+				pic = "bombdeath.gif";
+			else 
+				pic = "open0.gif";
+			setImage(pic);
+		}
 		
-		bgImg = (new ImageIcon(this.getClass().getResource("images/" + pic))).getImage();
 	}
 	
 	public void mark()
 	{
-		
+		if (covered)
+		{
+			String img = "";
+			
+			switch (cellState)
+			{
+				case UNMARKED:
+					cellState = CellState.FLAGGED;
+					img = "bombflagged.gif";
+					break;
+				case FLAGGED:
+					cellState = CellState.UNKNOWN;
+					img = "bombquestion.gif";
+					break;
+				case UNKNOWN:
+					cellState = CellState.UNMARKED;
+					img = "blank.gif";
+					break;
+			}
+			
+			setImage(img);
+		}
 	}
 	
 	public void pressed()
 	{
 		bgImg = (new ImageIcon(this.getClass().getResource("images/open0.gif"))).getImage();
+	}
+	
+	private void setImage(String image)
+	{
+		bgImg = (new ImageIcon(this.getClass().getResource("images/" + image))).getImage();
 	}
 }

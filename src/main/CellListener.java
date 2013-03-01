@@ -32,17 +32,30 @@ public class CellListener implements MouseListener
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		Cell c = (Cell)e.getSource();
-		c.pressed();
-		board.repaint();
-		
+
+//		c.pressed();
+//		board.repaint();
+//		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
+		int click = e.getButton();
 		Cell c = (Cell)e.getSource();
-		c.uncover();
+		
+		if (click == MouseEvent.BUTTON1)
+		{
+			//Left Click
+			c.uncover();
+		}
+		else if (click == MouseEvent.BUTTON3)
+		{
+			//Right Click
+			c.mark();
+		}
+		
+		
 		board.repaint();
 	}
 
