@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -8,6 +9,9 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Board extends JPanel
 {
+	enum Direction {NW, N, NE, E, SE, S, SW, W}
+	
+	private final Direction[] directions = {Direction.NW, Direction.N, Direction.NE, Direction.E, Direction.SE, Direction.S, Direction.SW, Direction.W};
 	private final int MINECOUNT = 10;
 	
 	private Cell[][] cells;
@@ -29,6 +33,7 @@ public class Board extends JPanel
 		
 		drawBoard();
 		placeMines();
+		calcAdjCount();
 	}
 	
 	/**
@@ -82,6 +87,141 @@ public class Board extends JPanel
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Calculates and sets the adjacency count for all cells in the grid
+	 */
+	private void calcAdjCount()
+	{
+		for (int row = 0; row < rowCount; row++)
+		{
+			for (int col = 0; col < colCount; col++)
+			{
+				Cell c = cells[row][col];
+				
+				if (c.isMined()==false)
+				{
+					int count = 0;
+					
+					for (int i = 0; i < 8; i++)
+					{
+						Cell n = getNeighbor(c, directions[i]);
+						
+							if (n != null && n.isMined())
+							{
+								count++;
+							}
+					}
+					c.setAdjCount(count);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Determines if a given cell position is valid
+	 * @param row the row position of the cell 
+	 * @param col the column column position of the cell
+	 * @return true if the position is valid false otherwise
+	 */
+	private boolean isValid(int row, int col)
+	{
+		if ((row >= 0) && (row < rowCount) && (col >= 0) && (col < colCount))
+			return true;
+		else 
+			return false;
+	}
+	
+	/**
+	 * Gets the neighbor of a cell
+	 * @param c the cell to get the neighbor
+	 * @param dir the direction of the neighbor
+	 * @return the neighbor of the cell c if it exists null otherwise
+	 */
+	private Cell getNeighbor(Cell c, Direction dir)
+	{
+		int row = c.getRow();
+		int col = c.getCol();
+		
+		switch (dir)
+		{
+			case NW:
+				row--;
+				col--;
+				break;
+			case N:
+				row--;
+				break;
+			case NE:
+				row--;
+				col++;
+				break;
+			case E:
+				col++;
+				break;
+			case SE:
+				row++;
+				col++;
+				break;
+			case S:
+				row++;
+				break;
+			case SW:
+				row++;
+				col--;
+				break;
+			case W:
+				col--;
+				break;
+				
+		}
+		
+		if (isValid(row, col))
+			return cells[row][col];
+		else
+			return null;
+	}
+	
+	/**
+	 * Uncovers all cells adjacent to the clicked cell that are not mined
+	 * @param current the cell clicked
+	 */
+	private void uncoverAdjacentCells(Cell current)
+	{
+		if (current == null)
+			return;
+		else if (!current.isCovered())
+			return;
+		else if (current.isCovered() && current.getAdjCount() == 0)
+		{
+			current.setCovered(false);
+		}
+		else if (current.isCovered() && current.getAdjCount() > 1)
+		{
+			current.setCovered(false);
+			return;
+		}
+//		ArrayList<Cell> adjList = new ArrayList<Cell>();
+//		
+//		adjList.add(current);
+//		int start = 0;
+//		int end = adjList.size();
+//		
+//		while (true)
+//		{
+//			for (Cell c: adjList)
+//			{
+//				int adjCount = c.getAdjCount();
+//				for (int i = 0; i < adjCount; i++)
+//				{
+//					if (adjCount == 0)
+//					{
+//						
+//					}
+//				}
+//			}
+//		}
 	}
 	
 }
