@@ -50,8 +50,8 @@ public class CellListener implements MouseListener
 		if (click == MouseEvent.BUTTON1)
 		{
 			//Left Click
-			board.uncoverAdjacentCells(current);
-			//current.uncover();
+			if (!current.isMarked())
+				board.uncoverAdjacentCells(current);		
 			
 			isGameOver(current);
 		}
@@ -66,7 +66,7 @@ public class CellListener implements MouseListener
 	
 	private void isGameOver(Cell current)
 	{
-		if (current.isMined())
+		if (!current.isMarked() && current.isMined())
 		{
 			System.out.println("Lose");
 		}

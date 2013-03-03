@@ -76,6 +76,14 @@ public class Cell extends JPanel
 		return mined;
 	}
 	
+	public boolean isMarked()
+	{
+		if (cellState == CellState.UNMARKED)
+			return false;
+		else
+			return true;
+	}
+	
 	public boolean isCovered()
 	{
 		return covered;

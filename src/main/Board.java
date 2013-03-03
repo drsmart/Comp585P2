@@ -82,7 +82,7 @@ public class Board extends JPanel
 		{
 			for(Cell cell: row)
 			{
-				if(cell.isMined() && !cell.isCovered())
+				if(!cell.isMined() && cell.isCovered())
 					return false;
 			}
 		}
