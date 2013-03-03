@@ -50,7 +50,9 @@ public class CellListener implements MouseListener
 		if (click == MouseEvent.BUTTON1)
 		{
 			//Left Click
-			current.uncover();
+			board.uncoverAdjacentCells(current);
+			//current.uncover();
+			
 			isGameOver(current);
 		}
 		else if (click == MouseEvent.BUTTON3)

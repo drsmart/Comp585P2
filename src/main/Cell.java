@@ -61,6 +61,11 @@ public class Cell extends JPanel
 		return adjCount;
 	}
 	
+	public int getNeighborCount()
+	{
+		return neighbors.size();
+	}
+	
 	public void setMined(boolean mined)
 	{
 		this.mined = mined;
@@ -111,8 +116,7 @@ public class Cell extends JPanel
 			else if (!covered && !mined)
 				pic = "open" + String.valueOf(adjCount) + ".gif";
 			setImage(pic);
-		}
-		
+		}		
 	}
 	
 	/**

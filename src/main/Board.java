@@ -107,7 +107,7 @@ public class Board extends JPanel
 					for (int i = 0; i < 8; i++)
 					{
 						Cell n = getNeighbor(c, directions[i]);
-						
+						c.addNeighbor(n);
 							if (n != null && n.isMined())
 							{
 								count++;
@@ -187,41 +187,28 @@ public class Board extends JPanel
 	 * Uncovers all cells adjacent to the clicked cell that are not mined
 	 * @param current the cell clicked
 	 */
-	private void uncoverAdjacentCells(Cell current)
+	public void uncoverAdjacentCells(Cell current)
 	{
 		if (current == null)
 			return;
+		
 		else if (!current.isCovered())
 			return;
+		
 		else if (current.isCovered() && current.getAdjCount() == 0)
 		{
-			current.setCovered(false);
+			current.uncover();
+			for ( int i = 0; i < current.getNeighborCount(); i++)
+			{
+				uncoverAdjacentCells(current.getNeighbor(i));
+			}
 		}
-		else if (current.isCovered() && current.getAdjCount() > 1)
+		
+		else if (current.isCovered() && current.getAdjCount() >= 1)
 		{
-			current.setCovered(false);
+			current.uncover();
 			return;
 		}
-//		ArrayList<Cell> adjList = new ArrayList<Cell>();
-//		
-//		adjList.add(current);
-//		int start = 0;
-//		int end = adjList.size();
-//		
-//		while (true)
-//		{
-//			for (Cell c: adjList)
-//			{
-//				int adjCount = c.getAdjCount();
-//				for (int i = 0; i < adjCount; i++)
-//				{
-//					if (adjCount == 0)
-//					{
-//						
-//					}
-//				}
-//			}
-//		}
 	}
 	
 }
