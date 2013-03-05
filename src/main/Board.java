@@ -3,7 +3,6 @@ package main;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -12,17 +11,16 @@ public class Board extends JPanel
 	enum Direction {NW, N, NE, E, SE, S, SW, W}
 	
 	private final Direction[] directions = {Direction.NW, Direction.N, Direction.NE, Direction.E, Direction.SE, Direction.S, Direction.SW, Direction.W};
-	private final int MINECOUNT = 10;
-	
+	private final int MINECOUNT = 10;	
 	private Cell[][] cells;
 	private int rowCount;
 	private int colCount;
 	private int mineCount;
-	private CellListener list;
+	private GameManager list;
 	
-	public Board(int rows, int cols)
+	public Board(int rows, int cols, GameManager listener)
 	{
-		list = new CellListener(this);
+		list = listener;
 		
 		rowCount = rows;
 		colCount = cols;
@@ -51,6 +49,14 @@ public class Board extends JPanel
 				this.add(c);
 			}
 		}
+	}
+	
+	/**
+	 * Resets the grid to its initial state
+	 */
+	public void newGame()
+	{
+		drawBoard();
 	}
 	
 	/**
