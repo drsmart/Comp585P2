@@ -2,6 +2,8 @@ package main;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import main.Cell.CellState;
+
 public class GameManager implements MouseListener 
 {
 	private MinesweeperGUI window;
@@ -67,6 +69,10 @@ public class GameManager implements MouseListener
 			{
 				//Right Click
 				current.mark();
+				if (current.getState() == CellState.FLAGGED)
+					window.markCell();
+				else if (current.getState() == CellState.UNKNOWN)
+					window.unMarkCell();
 			}
 			
 			board.repaint();

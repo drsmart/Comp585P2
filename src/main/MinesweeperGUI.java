@@ -2,12 +2,15 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 public class MinesweeperGUI extends JFrame
 {
@@ -17,15 +20,19 @@ public class MinesweeperGUI extends JFrame
 	private SmileyButton smiley;
 	private JMenuBar menuBar;
 	private GameManager listener;
+	private Counter counter;
+	private JPanel north;
 	
 	public MinesweeperGUI(GameManager manager)
 	{
 		super();
+		north = new JPanel(new GridBagLayout());
 		listener = manager;
 		container = this.getContentPane();
 		container.setLayout(new BorderLayout());
 		board = new Board(10,10, listener);
 		container.add(board, BorderLayout.CENTER);
+		container.add(north, BorderLayout.NORTH);
 		createMenus();
 		createButton();
 		this.pack();
@@ -45,9 +52,21 @@ public class MinesweeperGUI extends JFrame
 	
 	private void createButton()
 	{
+		GridBagConstraints c = new GridBagConstraints();
+		
+		counter = new  Counter(10);
 		smiley = new SmileyButton();
 		smiley.setBorder(BorderFactory.createEmptyBorder());
-		container.add(smiley, BorderLayout.NORTH);
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		north.add(counter, c);
+		
+		c.gridx = 1;
+		
+		north.add(smiley, c);
 	}
 	
 	public void setButton()
@@ -64,5 +83,16 @@ public class MinesweeperGUI extends JFrame
 	{
 		smiley.gameOver(won);
 	}
-
+	
+	public void markCell()
+	{
+		counter.decrement();
+	}
+	
+	public void unMarkCell()
+	{
+		counter.increment();
+	}
+	
+	
 }

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class Cell extends JPanel 
 {
-	enum CellState {UNMARKED, FLAGGED, UNKNOWN}
+	protected enum CellState {UNMARKED, FLAGGED, UNKNOWN}
 	
 	private int row;
 	private int col;
@@ -164,5 +164,10 @@ public class Cell extends JPanel
 	private void setImage(String image)
 	{
 		bgImg = (new ImageIcon(this.getClass().getResource("images/" + image))).getImage();
+	}
+	
+	public CellState getState()
+	{
+		return cellState;
 	}
 }
