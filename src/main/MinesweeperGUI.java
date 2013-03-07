@@ -21,6 +21,7 @@ public class MinesweeperGUI extends JFrame
 	private JMenuBar menuBar;
 	private GameManager listener;
 	private Counter counter;
+	private TimerLabel timer;
 	private JPanel north;
 	
 	public MinesweeperGUI(GameManager manager)
@@ -54,6 +55,8 @@ public class MinesweeperGUI extends JFrame
 	{
 		GridBagConstraints c = new GridBagConstraints();
 		
+		timer = new TimerLabel();
+		timer.startTimer();
 		counter = new  Counter(10);
 		smiley = new SmileyButton();
 		smiley.setBorder(BorderFactory.createEmptyBorder());
@@ -67,6 +70,10 @@ public class MinesweeperGUI extends JFrame
 		c.gridx = 1;
 		
 		north.add(smiley, c);
+		
+		c.gridx = 2;
+		
+		north.add(timer, c);
 	}
 	
 	public void setButton()

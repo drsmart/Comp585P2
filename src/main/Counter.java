@@ -10,21 +10,30 @@ public class Counter extends JPanel
 	private JLabel tens;
 	private JLabel ones;
 	private ImageIcon[] numbers;
-	private int numSelected;
+	protected int numSelected;
 	private int maxMines;
+	
+	public Counter()
+	{
+		initLabel(0);
+	}
 	
 	public Counter(int numOfMines)
 	{
+		initLabel(numOfMines);
+	}
+
+	private void initLabel(int numMines)
+	{
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
-		maxMines = numSelected = numOfMines;
+		maxMines = numSelected = numMines;
 		numbers = new ImageIcon[10];
-		initTimer(numSelected);
+		initDisplay(numSelected);
 		initNumbers();
 		setTimer(numSelected);
-		
 	}
 	
-	private void setTimer(int numMines)
+	protected void setTimer(int numMines)
 	{
 		int hundreds = numMines / 100;
 		int tens = (numMines / 10) % 10;
@@ -39,7 +48,7 @@ public class Counter extends JPanel
 		this.add(this.ones);
 	}
 	
-	private void initTimer(int numMines)
+	private void initDisplay(int numMines)
 	{	
 		this.hundreds = new JLabel();
 		this.tens = new JLabel();
