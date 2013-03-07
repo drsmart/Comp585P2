@@ -15,6 +15,15 @@ import javax.swing.JPanel;
 public class MinesweeperGUI extends JFrame
 {
 	private static final long serialVersionUID = 42L;
+	
+	private static final int BEGINNERSIZE = 8;
+	private static final int INTERMEDIATE = 16;
+	private static final int EXPERTROWS = 16;
+	
+	private static final int BEGINNERMINECOUNT = 10;
+	private static final int INTERMEDIATEMINECOUNT = 40;
+	private static final int EXPERTMINECOUNT = 99;
+	
 	private Container container;
 	private Board board;
 	private SmileyButton smiley;
@@ -36,6 +45,8 @@ public class MinesweeperGUI extends JFrame
 		container.add(north, BorderLayout.NORTH);
 		createMenus();
 		createButton();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
 		this.pack();
 		this.setVisible(true);
 	}
@@ -56,7 +67,6 @@ public class MinesweeperGUI extends JFrame
 		GridBagConstraints c = new GridBagConstraints();
 		
 		timer = new TimerLabel();
-		timer.startTimer();
 		counter = new  Counter(10);
 		smiley = new SmileyButton();
 		smiley.setBorder(BorderFactory.createEmptyBorder());
@@ -100,6 +110,13 @@ public class MinesweeperGUI extends JFrame
 	{
 		counter.increment();
 	}
-	
-	
+
+	public void startTimer()
+	{
+		timer.startTimer();
+	}
+	public void stopTimer()
+	{
+		timer.stopTimer();
+	}	
 }

@@ -10,12 +10,14 @@ public class GameManager implements MouseListener
 	private Board board;
 	private Cell current;
 	private boolean gameOver;
+	private boolean firstMove;
 	
 	public GameManager()
 	{
 		window = new MinesweeperGUI(this);
 		board = window.getBoard();
 		gameOver = false;
+		firstMove = true;
 	}
 
 	@Override
@@ -41,6 +43,11 @@ public class GameManager implements MouseListener
 	{
 		if (!gameOver)
 			window.setButton();
+		if(firstMove)
+		{
+			firstMove = false;
+			window.startTimer();
+		}
 //		Cell c = (Cell)e.getSource();
 //		c.pressed();
 //		board.repaint();	
@@ -80,6 +87,7 @@ public class GameManager implements MouseListener
 		
 		if (gameOver)
 		{
+			window.stopTimer();
 			newGame();
 		}
 	}

@@ -7,10 +7,13 @@ import javax.swing.Timer;
 
 public class TimerLabel extends Counter
 {
+	private Timer timer;
 	
 	public TimerLabel()
 	{
-		super();	
+		super();
+		timer = new Timer(1000,timerListener);
+		timer.setInitialDelay(10);
 	}
 	
 	@Override
@@ -22,9 +25,13 @@ public class TimerLabel extends Counter
 	
 	public void startTimer()
 	{
-		Timer t = new Timer(1000,timerListener);
-		t.setInitialDelay(10);
-		t.start();
+		
+		timer.start();
+	}
+	
+	public void stopTimer()
+	{
+		timer.stop();
 	}
 	
 	ActionListener timerListener = new ActionListener()
@@ -33,6 +40,7 @@ public class TimerLabel extends Counter
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
+			//while(true);
 			increment();
 		}
 		
