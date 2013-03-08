@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class MinesweeperGUI extends JFrame
@@ -52,7 +53,7 @@ public class MinesweeperGUI extends JFrame
 		north = new JPanel(new GridBagLayout());
 		listener = manager;
 		container = this.getContentPane();
-		board = new Board(8,8, listener);
+		board = new Board(EXPERTROWS, EXPERTROWS * 2,EXPERTMINECOUNT, listener);
 		createMenus();
 		createButton();
 		layoutComponents();
@@ -120,6 +121,10 @@ public class MinesweeperGUI extends JFrame
 		JMenu game = new JMenu("Game");
 		JMenu help = new JMenu("Help");
 		
+		JMenuItem newGame = new JMenuItem("New");
+		JMenuItem exit = new JMenuItem("Exit");
+		game.add(newGame);
+		game.add(exit);
 		menuBar.add(game);
 		menuBar.add(help);
 		this.setJMenuBar(menuBar);

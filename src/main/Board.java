@@ -19,14 +19,14 @@ public class Board extends JPanel
 	private int mineCount;
 	private GameManager list;
 	
-	public Board(int rows, int cols, GameManager listener)
+	public Board(int rows, int cols, int mineCount, GameManager listener)
 	{
 		list = listener;
 		
 		rowCount = rows;
 		colCount = cols;
 		cells = new Cell[rows][cols];
-		mineCount = MINECOUNT;
+		this.mineCount = mineCount;
 		
 		this.setLayout(new GridLayout(rowCount, colCount));
 		
@@ -269,6 +269,11 @@ public class Board extends JPanel
 				cell.reset();
 			}
 		}
+	}
+	
+	public void setMineCount(int mineCount)
+	{
+		this.mineCount = mineCount; 
 	}
 	
 	@Override
