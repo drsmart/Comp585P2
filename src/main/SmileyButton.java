@@ -21,36 +21,11 @@ public class SmileyButton extends JLabel
 		pressed = false;
 	}
 	
-	MouseListener listener = new MouseListener()
+	public void reset()
 	{
-		
-		@Override
-		public void mouseReleased(MouseEvent e)
-		{
-		}
-		
-		@Override
-		public void mousePressed(MouseEvent e)
-		{			
-		}
-		
-		@Override
-		public void mouseExited(MouseEvent e)
-		{	
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent e)
-		{	
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent e)
-		{
-			
-		}
-	};
-
+		this.setIcon(new ImageIcon(this.getClass().getResource(PREFIX + SMILE)));
+	}
+	
 	public void minePressed()
 	{
 		pressed = !pressed;

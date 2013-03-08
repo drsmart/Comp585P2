@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.GridLayout;
+import main.Cell.CellState;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
@@ -56,7 +57,9 @@ public class Board extends JPanel
 	 */
 	public void newGame()
 	{
-		drawBoard();
+		coverAll();
+		placeMines();
+		calcAdjCount();
 	}
 	
 	/**
@@ -217,4 +220,51 @@ public class Board extends JPanel
 		}
 	}
 	
+	/**
+	 * Updates the board state to the appropriate game over state
+	 * @param win boolean representing whether the player won or lost
+	 */
+	public void gameOver(boolean win)
+	{
+		if (win)
+			markAll();
+		else
+			uncoverAll();
+	}
+	
+	private void markAll()
+	{
+		for (Cell [] row : cells)
+		{
+			for (Cell cell : row)
+			{
+				if (cell.isMined())
+					cell.flag();
+			}
+		}
+		repaint();
+	}
+	
+	private void uncoverAll()
+	{
+		for (Cell [] row : cells)
+		{
+			for (Cell cell : row)
+			{
+				if (cell.isMined())
+					cell.uncover();
+			}
+		}
+	}
+	
+	public void coverAll()
+	{
+		for (Cell [] row : cells)
+		{
+			for (Cell cell : row)
+			{
+				cell.reset();
+			}
+		}
+	}
 }

@@ -37,8 +37,17 @@ public class Cell extends JPanel
 		width = img.getIconWidth();
 		height = img.getIconHeight();
 		bgImg = img.getImage();
-		this.setPreferredSize(new Dimension(width, height));
-		
+		this.setPreferredSize(new Dimension(width, height));	
+	}
+	
+	public void reset()
+	{
+		adjCount = 0;
+		mined = false;
+		covered = true;
+		cellState = CellState.UNMARKED;
+		neighbors = new ArrayList<Cell>();
+		cover();
 	}
 	
 	public int getRow()
@@ -156,6 +165,23 @@ public class Cell extends JPanel
 		}
 	}
 	
+	/**
+	 * Marks the cell with a flag
+	 */
+	public void flag()
+	{
+		setImage("bombflagged.gif");
+	}
+	
+	/**
+	 * Marks the cell with a flag
+	 */
+	public void cover()
+	{
+		covered = true;
+		setImage("blank.gif");
+	}
+	
 	public void pressed()
 	{
 		bgImg = (new ImageIcon(this.getClass().getResource("images/open0.gif"))).getImage();
@@ -169,5 +195,10 @@ public class Cell extends JPanel
 	public CellState getState()
 	{
 		return cellState;
+	}
+
+	public void setState(CellState state)
+	{
+		cellState = state;		
 	}
 }

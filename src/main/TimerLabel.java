@@ -3,6 +3,7 @@ package main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 public class TimerLabel extends Counter
@@ -25,12 +26,18 @@ public class TimerLabel extends Counter
 	
 	public void startTimer()
 	{
-		
 		timer.start();
 	}
 	
 	public void stopTimer()
 	{
+		timer.stop();
+	}
+	
+	public void reset()
+	{
+		setTimer(0);
+		numSelected = 0;
 		timer.stop();
 	}
 	
@@ -40,7 +47,6 @@ public class TimerLabel extends Counter
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			//while(true);
 			increment();
 		}
 		

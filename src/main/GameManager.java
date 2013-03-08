@@ -88,7 +88,6 @@ public class GameManager implements MouseListener
 		if (gameOver)
 		{
 			window.stopTimer();
-			newGame();
 		}
 	}
 	
@@ -108,9 +107,10 @@ public class GameManager implements MouseListener
 		return gameOver;
 	}
 
-	private void newGame()
+	protected void newGame()
 	{
-		board.newGame();
-		board.repaint();
+		gameOver = false;
+		firstMove = true;
+		window.newGame();
 	}
 }
