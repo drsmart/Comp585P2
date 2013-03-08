@@ -52,7 +52,7 @@ public class MinesweeperGUI extends JFrame
 		north = new JPanel(new GridBagLayout());
 		listener = manager;
 		container = this.getContentPane();
-		board = new Board(10,10, listener);
+		board = new Board(8,8, listener);
 		createMenus();
 		createButton();
 		layoutComponents();
@@ -177,6 +177,7 @@ public class MinesweeperGUI extends JFrame
 		board.newGame();
 		timer.reset();
 		smiley.reset();
+		counter.setCounter(10);
 		this.repaint();
 	}
 	

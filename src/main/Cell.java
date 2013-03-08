@@ -201,4 +201,17 @@ public class Cell extends JPanel
 	{
 		cellState = state;		
 	}
+	@Override
+	public String toString()
+	{
+		String cell = "";
+		
+		if (mined)
+			cell = "x";
+		else if (adjCount == 0)
+			cell = "_";
+		else
+			cell = String.valueOf(adjCount);
+		return cell;
+	}
 }

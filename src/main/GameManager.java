@@ -81,7 +81,7 @@ public class GameManager implements MouseListener
 				else if (current.getState() == CellState.UNKNOWN)
 					window.unMarkCell();
 			}
-			
+			System.out.println(board);
 			board.repaint();
 		}
 		

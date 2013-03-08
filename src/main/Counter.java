@@ -30,10 +30,10 @@ public class Counter extends JPanel
 		numbers = new ImageIcon[10];
 		initDisplay(numSelected);
 		initNumbers();
-		setTimer(numSelected);
+		setCounter(numSelected);
 	}
 	
-	protected void setTimer(int numMines)
+	protected void setCounter(int numMines)
 	{
 		int hundreds = numMines / 100;
 		int tens = (numMines / 10) % 10;
@@ -73,7 +73,7 @@ public class Counter extends JPanel
 		if (numSelected < maxMines)
 		{
 			numSelected++;
-			setTimer(numSelected);
+			setCounter(numSelected);
 		}
 	}
 	
@@ -82,7 +82,7 @@ public class Counter extends JPanel
 		if (numSelected > 0)
 		{
 			numSelected--;
-			setTimer(numSelected);
+			setCounter(numSelected);
 		}
 	}
 }

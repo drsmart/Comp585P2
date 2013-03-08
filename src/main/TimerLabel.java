@@ -21,7 +21,7 @@ public class TimerLabel extends Counter
 	public void increment()
 	{
 		numSelected++;
-		setTimer(numSelected);
+		setCounter(numSelected);
 	}
 	
 	public void startTimer()
@@ -36,7 +36,7 @@ public class TimerLabel extends Counter
 	
 	public void reset()
 	{
-		setTimer(0);
+		setCounter(0);
 		numSelected = 0;
 		timer.stop();
 	}

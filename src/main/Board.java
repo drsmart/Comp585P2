@@ -76,8 +76,11 @@ public class Board extends JPanel
 		{
 			row = rndm.nextInt(rowCount);
 			col = rndm.nextInt(colCount);
-			cells[row][col].setMined(true);
-			minesPlaced++;
+			if (!cells[row][col].isMined())
+			{
+				cells[row][col].setMined(true);
+				minesPlaced++;
+			}	
 		}
 	}
 	
@@ -266,5 +269,22 @@ public class Board extends JPanel
 				cell.reset();
 			}
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		String board = "";
+		
+		for (int row = 0; row < rowCount; row++)
+		{
+			for (int col = 0; col < colCount; col++)
+			{
+				board = board + cells[row][col].toString() + " ";
+			}
+			board += "\n";
+		}
+		
+		return board;
 	}
 }
