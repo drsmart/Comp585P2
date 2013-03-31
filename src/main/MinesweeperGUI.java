@@ -1,27 +1,21 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 
 public class MinesweeperGUI extends JFrame
@@ -80,13 +74,16 @@ public class MinesweeperGUI extends JFrame
 		board = new Board(rows, cols, mineCount, listener);
 		this.setVisible(true);
 		createMenus();
-		createButton();
+		createTimerBar();
 		layoutComponents();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		this.pack();
 	}
 	
+	/**
+	 * Initialize JLabels that represent the borders around the game board
+	 */
 	private void createBorder()
 	{
 		topR = new JLabel(new ImageIcon(this.getClass().getResource("images/bordertr.gif")));
@@ -106,6 +103,9 @@ public class MinesweeperGUI extends JFrame
 		verticalL = new JLabel(new ImageIcon(t));
 	}
 	
+	/**
+	 * Position GUI components
+	 */
 	private void layoutComponents()
 	{
 		createBorder();
@@ -172,6 +172,9 @@ public class MinesweeperGUI extends JFrame
 		
 	}
 	
+	/**
+	 * Resize the game board border when the window size changes
+	 */
 	private void resizeBorder()
 	{
 		Image t = (new ImageIcon(this.getClass().getResource("images/bordertb.gif"))).getImage();
@@ -186,6 +189,9 @@ public class MinesweeperGUI extends JFrame
 		verticalL.setIcon(new ImageIcon(t));
 	}
 	
+	/**
+	 * Create the menus
+	 */
 	private void createMenus()
 	{
 		menuBar = new JMenuBar();
@@ -205,6 +211,7 @@ public class MinesweeperGUI extends JFrame
 		intermediate.setActionCommand("Intermediate");
 		expert.setActionCommand("Expert");
 		
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(beginner);
 		group.add(intermediate);
@@ -230,7 +237,10 @@ public class MinesweeperGUI extends JFrame
 		this.setJMenuBar(menuBar);
 	}
 	
-	private void createButton()
+	/**
+	 * Create the timer, counter bar
+	 */
+	private void createTimerBar()
 	{
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -263,22 +273,37 @@ public class MinesweeperGUI extends JFrame
 		north.add(timer, c);
 	}
 	
+	/**
+	 * Sets the smiley face button to mine pressed state
+	 */
 	public void setButton()
 	{
 		smiley.minePressed();
 	}
-
+	
+	/**
+	 * Returns the game board
+	 * @return the game board
+	 */
 	public Board getBoard()
 	{
 		return board;
 	}
 	
+	/**
+	 * Handles the game over event
+	 * @param won whether the player won or not
+	 */
 	public void gameOver(boolean won)
 	{
 		smiley.gameOver(won);
 		board.gameOver(won);
 	}
 	
+	/**
+	 * Sets the difficulty of the game
+	 * @param difficulty the difficulty to set the game to
+	 */
 	public void setDifficulty(String difficulty)
 	{
 		switch (difficulty)
@@ -306,6 +331,9 @@ public class MinesweeperGUI extends JFrame
 		this.pack();
 	}
 	
+	/**
+	 * Reset GUI components and start a new game
+	 */
 	public void newGame()
 	{
 		board.newGame();
@@ -315,20 +343,33 @@ public class MinesweeperGUI extends JFrame
 		this.repaint();
 	}
 	
+	/**
+	 * Decrement mine counter
+	 */
 	public void markCell()
 	{
 		counter.decrement();
 	}
 	
+	/**
+	 * Increment mine counter
+	 */
 	public void unMarkCell()
 	{
 		counter.increment();
 	}
 
+	/**
+	 * Start the game timer
+	 */
 	public void startTimer()
 	{
 		timer.startTimer();
 	}
+	
+	/**
+	 * Stop the game timer
+	 */
 	public void stopTimer()
 	{
 		timer.stopTimer();

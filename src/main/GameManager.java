@@ -30,12 +30,6 @@ public class GameManager extends MouseAdapter
 	}
 
 	@Override
-	public void mouseExited(MouseEvent e) 
-	{
-		
-	}
-
-	@Override
 	public void mousePressed(MouseEvent e) 
 	{
 		if (!gameOver)
@@ -44,10 +38,7 @@ public class GameManager extends MouseAdapter
 		{
 			firstMove = false;
 			window.startTimer();
-		}
-//		Cell c = (Cell)e.getSource();
-//		c.pressed();
-//		board.repaint();	
+		}	
 	}
 
 	@Override
@@ -55,7 +46,11 @@ public class GameManager extends MouseAdapter
 	{
 		release(e.getButton());
 	}
-
+	
+	/**
+	 * Updates the ui depending on the clicked mouse button
+	 * @param click the button clicked
+	 */
 	private void release(int click)
 	{
 		if (!gameOver)
@@ -87,7 +82,12 @@ public class GameManager extends MouseAdapter
 			window.stopTimer();
 		}
 	}
-
+	
+	/**
+	 * Check if the game is over
+	 * @param current the cell clicked on
+	 * @return true if a bombed cell is clicked on fales otherwise
+	 */
 	private boolean isGameOver(Cell current)
 	{
 		boolean gameOver = false;
@@ -104,11 +104,18 @@ public class GameManager extends MouseAdapter
 		return gameOver;
 	}
 	
+	/**
+	 * Change game difficulty setting
+	 * @param difficulty 
+	 */
 	protected void changeDifficulty(String difficulty)
 	{
 		window.setDifficulty(difficulty);
 	}
 
+	/**
+	 * Start a new game 
+	 */
 	protected void newGame()
 	{
 		gameOver = false;

@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.FlowLayout;
-
 import javax.swing.*;
 
 public class Counter extends JPanel
@@ -27,6 +26,10 @@ public class Counter extends JPanel
 		initLabel(numOfMines);
 	}
 
+	/**
+	 * Initialize counter components
+	 * @param numMines the counter value
+	 */
 	private void initLabel(int numMines)
 	{
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
@@ -38,6 +41,10 @@ public class Counter extends JPanel
 		negative = new ImageIcon(this.getClass().getResource("images/moves-.gif"));
 	}
 	
+	/**
+	 * Set the counter value
+	 * @param numMines the counter value
+	 */
 	protected void setCounter(int numMines)
 	{
 		boolean neg = false;
@@ -61,6 +68,9 @@ public class Counter extends JPanel
 		this.ones.setIcon(numbers[o]);	
 	}
 	
+	/**
+	 * Update the display
+	 */
 	protected void updateDisplay()
 	{
 		hundreds.setIcon(numbers[h]);
@@ -68,6 +78,10 @@ public class Counter extends JPanel
 		ones.setIcon(numbers[o]);	
 	}
 	
+	/**
+	 * Initialize the counter display
+	 * @param number that will be displayed
+	 */
 	private void initDisplay(int numMines)
 	{	
 		this.hundreds = new JLabel();
@@ -79,6 +93,9 @@ public class Counter extends JPanel
 		this.add(this.ones);
 	}
 	
+	/**
+	 * Initialize the counter
+	 */
 	private void initNumbers()
 	{
 		StringBuilder imageName = new StringBuilder("moves");
@@ -92,6 +109,9 @@ public class Counter extends JPanel
 		}
 	}
 	
+	/**
+	 * Increment the mine counter
+	 */
 	public void increment()
 	{
 		if (numSelected < maxMines)
@@ -101,17 +121,28 @@ public class Counter extends JPanel
 		}
 	}
 	
+	/**
+	 * Decrement the mine counter
+	 */
 	public void decrement()
 	{
 			numSelected--;
 			setCounter(numSelected);
 	}
 	
+	/**
+	 * Set the maximum number of mines on the board
+	 * @param mines the maximum number of mines
+	 */
 	private void setMax(int mines)
 	{
 		maxMines = mines;
 	}
 	
+	/**
+	 * Reset the counter
+	 * @param mines the number of mines on the board
+	 */
 	public void reset(int mines)
 	{
 		numSelected = mines;

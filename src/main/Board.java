@@ -307,11 +307,13 @@ public class Board extends JPanel
 		this.mineCount = mineCount; 
 	}
 	
+	@Override
 	public int getWidth()
 	{
 		return 16 * colCount;
 	}
 	
+	@Override
 	public int getHeight()
 	{
 		return 16 * rowCount;
