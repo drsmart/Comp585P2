@@ -136,6 +136,14 @@ public class Cell extends JPanel
 		}		
 	}
 	
+	public void bombReveal()
+	{
+		if (mined && !(cellState == CellState.FLAGGED))
+			setImage("bombrevealed.gif");
+		else if (!mined && cellState == CellState.FLAGGED)
+			setImage("bombmisflagged.gif");
+	}
+	
 	/**
 	 * Set the cell state as flagged, unknown, or unmarked
 	 */

@@ -6,10 +6,14 @@ import javax.swing.*;
 
 public class Counter extends JPanel
 {
-	private JLabel hundreds;
-	private JLabel tens;
-	private JLabel ones;
-	private ImageIcon[] numbers;
+	protected JLabel hundreds;
+	protected JLabel tens;
+	protected JLabel ones;
+	protected ImageIcon[] numbers;
+	private ImageIcon negative;
+	int h;
+	int t;
+	int o;
 	protected int numSelected;
 	private int maxMines;
 	
@@ -31,21 +35,37 @@ public class Counter extends JPanel
 		initDisplay(numSelected);
 		initNumbers();
 		setCounter(numSelected);
+		negative = new ImageIcon(this.getClass().getResource("images/moves-.gif"));
 	}
 	
 	protected void setCounter(int numMines)
 	{
-		int hundreds = numMines / 100;
-		int tens = (numMines / 10) % 10;
-		int ones = numMines % 10;
+		boolean neg = false;
+
+		if(numMines< 0)
+			neg = true;
+				
+		if(neg)
+		{
+			hundreds.setIcon(negative);
+			numMines *= -1;
+		}
+		else
+			this.hundreds.setIcon(numbers[h]);
 		
-		this.hundreds.setIcon(numbers[hundreds]);
-		this.tens.setIcon(numbers[tens]);
-		this.ones.setIcon(numbers[ones]);
+		h = numMines / 100;
+		t = (numMines / 10) % 10;
+		o = numMines % 10;
 		
-		this.add(this.hundreds);
-		this.add(this.tens);
-		this.add(this.ones);
+		this.tens.setIcon(numbers[t]);
+		this.ones.setIcon(numbers[o]);	
+	}
+	
+	protected void updateDisplay()
+	{
+		hundreds.setIcon(numbers[h]);
+		tens.setIcon(numbers[t]);
+		ones.setIcon(numbers[o]);	
 	}
 	
 	private void initDisplay(int numMines)
@@ -53,6 +73,10 @@ public class Counter extends JPanel
 		this.hundreds = new JLabel();
 		this.tens = new JLabel();
 		this.ones = new JLabel();
+		
+		this.add(this.hundreds);
+		this.add(this.tens);
+		this.add(this.ones);
 	}
 	
 	private void initNumbers()
@@ -79,10 +103,19 @@ public class Counter extends JPanel
 	
 	public void decrement()
 	{
-		if (numSelected > 0)
-		{
 			numSelected--;
 			setCounter(numSelected);
-		}
+	}
+	
+	private void setMax(int mines)
+	{
+		maxMines = mines;
+	}
+	
+	public void reset(int mines)
+	{
+		numSelected = mines;
+		setMax(mines);
+		setCounter(mines);
 	}
 }

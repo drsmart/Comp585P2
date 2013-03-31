@@ -1,12 +1,14 @@
 package main;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import main.Cell.CellState;
 
-public class GameManager implements MouseListener 
+public class GameManager extends MouseAdapter 
 {
 	private MinesweeperGUI window;
+	private MenuListener menuListener;
 	private Board board;
 	private Cell current;
 	private boolean gameOver;
@@ -14,16 +16,11 @@ public class GameManager implements MouseListener
 	
 	public GameManager()
 	{
-		window = new MinesweeperGUI(this);
+		menuListener = new MenuListener(this);
+		window = new MinesweeperGUI(this, menuListener);
 		board = window.getBoard();
 		gameOver = false;
 		firstMove = true;
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) 
-	{
-
 	}
 
 	@Override
@@ -81,7 +78,7 @@ public class GameManager implements MouseListener
 				else if (current.getState() == CellState.UNKNOWN)
 					window.unMarkCell();
 			}
-			System.out.println(board);
+
 			board.repaint();
 		}
 		
@@ -90,7 +87,7 @@ public class GameManager implements MouseListener
 			window.stopTimer();
 		}
 	}
-	
+
 	private boolean isGameOver(Cell current)
 	{
 		boolean gameOver = false;
@@ -105,6 +102,11 @@ public class GameManager implements MouseListener
 			gameOver = true;
 		}
 		return gameOver;
+	}
+	
+	protected void changeDifficulty(String difficulty)
+	{
+		window.setDifficulty(difficulty);
 	}
 
 	protected void newGame()

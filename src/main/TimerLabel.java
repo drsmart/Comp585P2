@@ -15,13 +15,33 @@ public class TimerLabel extends Counter
 		super();
 		timer = new Timer(1000,timerListener);
 		timer.setInitialDelay(10);
+		updateDisplay();
 	}
 	
 	@Override
 	public void increment()
 	{
-		numSelected++;
-		setCounter(numSelected);
+		if (numSelected < 1000)
+		{
+			numSelected++;
+			setCounter(numSelected);
+			updateDisplay();
+		}
+	}
+	
+	protected void setCounter(int numMines)
+	{
+		numSelected = numMines;
+		h = numMines / 100;
+		t = (numMines / 10) % 10;
+		o = numMines % 10;
+	}
+	
+	protected void updateDisplay()
+	{
+		hundreds.setIcon(numbers[h]);
+		tens.setIcon(numbers[t]);
+		ones.setIcon(numbers[o]);	
 	}
 	
 	public void startTimer()
@@ -37,6 +57,7 @@ public class TimerLabel extends Counter
 	public void reset()
 	{
 		setCounter(0);
+		updateDisplay();
 		numSelected = 0;
 		timer.stop();
 	}

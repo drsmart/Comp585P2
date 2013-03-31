@@ -3,12 +3,16 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +21,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 
 public class MinesweeperGUI extends JFrame
 {
@@ -43,40 +49,69 @@ public class MinesweeperGUI extends JFrame
 	private JLabel topL;
 	private JLabel bottomR;
 	private JLabel bottomL;
-	private JLabel horizontal;
-	private JLabel vertical;
+	private JLabel horizontalTop;
+	private JLabel verticalR;
 	
-	public MinesweeperGUI(GameManager manager)
+	private int rows;
+	private int cols;
+	private int mineCount;
+	
+	private MenuListener menuListener;
+
+	private JLabel horizontalMid;
+
+	private JLabel horizontalBottom;
+
+	private JLabel verticalL;
+	
+	public MinesweeperGUI(GameManager manager, MenuListener menuListener)
 	{
 		super();
 		setLayout(new GridBagLayout());
+		this.menuListener = menuListener;
 		north = new JPanel(new GridBagLayout());
 		listener = manager;
 		container = this.getContentPane();
-		board = new Board(EXPERTROWS, EXPERTROWS * 2,EXPERTMINECOUNT, listener);
+		
+		rows = BEGINNERSIZE;
+		cols = BEGINNERSIZE;
+		mineCount = BEGINNERMINECOUNT;
+		
+		board = new Board(rows, cols, mineCount, listener);
+		this.setVisible(true);
 		createMenus();
 		createButton();
 		layoutComponents();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		this.pack();
-		this.setVisible(true);
 	}
 	
-	private void layoutComponents()
+	private void createBorder()
 	{
 		topR = new JLabel(new ImageIcon(this.getClass().getResource("images/bordertr.gif")));
 		topL = new JLabel(new ImageIcon(this.getClass().getResource("images/bordertl.gif")));
 		bottomR = new JLabel(new ImageIcon(this.getClass().getResource("images/borderbr.gif")));
 		bottomL = new JLabel(new ImageIcon(this.getClass().getResource("images/borderbl.gif")));
-		vertical = new JLabel(new ImageIcon(this.getClass().getResource("images/borderlr.gif")));
-		horizontal = new JLabel();
+				
+		Image t = (new ImageIcon(this.getClass().getResource("images/bordertb.gif"))).getImage();
+		t = t.getScaledInstance(board.getWidth(), t.getHeight(this), java.awt.Image.SCALE_FAST);
+		horizontalTop = new JLabel(new ImageIcon(t));
+		horizontalMid = new JLabel(new ImageIcon(t));
+		horizontalBottom = new JLabel(new ImageIcon(t));
 		
-		horizontal.setLayout(new GridBagLayout());
+		t =(new ImageIcon(this.getClass().getResource("images/borderlr.gif"))).getImage(); 
+		t = t.getScaledInstance(t.getWidth(this), board.getHeight(), java.awt.Image.SCALE_FAST);
+		verticalR = new JLabel(new ImageIcon(t));
+		verticalL = new JLabel(new ImageIcon(t));
+	}
+	
+	private void layoutComponents()
+	{
+		createBorder();
+		
 		GridBagConstraints c = new GridBagConstraints();
 		
-//		c.weightx = 1;
-//		c.weighty = 1;
 		c.gridx = 0;
 		c.gridy = 0;
 		
@@ -91,28 +126,64 @@ public class MinesweeperGUI extends JFrame
 		container.add(bottomL, c);
 		c.gridx = 2;
 		container.add(bottomR, c);
-		c.weightx = 1;
-		c.weighty = 1;
 		c.gridx = 1;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
-
-		JPanel t = new JPanel();
-		t.setBackground(Color.white);
 		
 		c.gridx = 1;
 		c.gridy = 1;
 		container.add(north, c);
 		
 		c.gridy = 3;
+		c.fill = GridBagConstraints.NONE;
 		container.add(board, c);
-		
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
 		container.add(new JLabel(new ImageIcon(this.getClass().getResource("images/borderjointl.gif"))), c);
 		
 		c.gridx = 2;
 		container.add(new JLabel(new ImageIcon(this.getClass().getResource("images/borderjointr.gif"))), c);
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		
+		container.add(horizontalTop, c);
+		c.gridy = 2;
+		container.add(horizontalMid, c);
+		c.gridy = 4;
+		container.add(horizontalBottom, c);
+		c.gridx = 0;
+		c.gridy = 3;
+		container.add(verticalL, c);
+		c.gridx = 2;
+		container.add(verticalR, c);
+		
+		
+		Image t =(new ImageIcon(this.getClass().getResource("images/borderlr.gif"))).getImage(); 
+		t = t.getScaledInstance(t.getWidth(this), 26, java.awt.Image.SCALE_FAST);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		container.add(new JLabel(new ImageIcon(t)), c);
+		
+		c.gridx = 2;
+		container.add(new JLabel(new ImageIcon(t)), c);
+		
+	}
+	
+	private void resizeBorder()
+	{
+		Image t = (new ImageIcon(this.getClass().getResource("images/bordertb.gif"))).getImage();
+		t = t.getScaledInstance(board.getWidth(), t.getHeight(this), java.awt.Image.SCALE_FAST);
+		horizontalTop.setIcon(new ImageIcon(t));
+		horizontalMid.setIcon(new ImageIcon(t));
+		horizontalBottom.setIcon(new ImageIcon(t));
+		
+		t =(new ImageIcon(this.getClass().getResource("images/borderlr.gif"))).getImage(); 
+		t = t.getScaledInstance(t.getWidth(this), board.getHeight(), java.awt.Image.SCALE_FAST);
+		verticalR.setIcon(new ImageIcon(t));
+		verticalL.setIcon(new ImageIcon(t));
 	}
 	
 	private void createMenus()
@@ -123,10 +194,39 @@ public class MinesweeperGUI extends JFrame
 		
 		JMenuItem newGame = new JMenuItem("New");
 		JMenuItem exit = new JMenuItem("Exit");
+		
+		
+		JRadioButtonMenuItem beginner = new JRadioButtonMenuItem("Beginner");
+		JRadioButtonMenuItem intermediate = new JRadioButtonMenuItem("Intermediate");
+		JRadioButtonMenuItem expert = new JRadioButtonMenuItem("Expert");
+		
+		beginner.setSelected(true);
+		beginner.setActionCommand("Beginner");
+		intermediate.setActionCommand("Intermediate");
+		expert.setActionCommand("Expert");
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(beginner);
+		group.add(intermediate);
+		group.add(expert);
+		
+		// Add Game menu items
 		game.add(newGame);
+		game.add(beginner);
+		game.add(intermediate);
+		game.add(expert);
 		game.add(exit);
+		
+		//Add listener to menu items
+		newGame.addActionListener(menuListener);
+		beginner.addActionListener(menuListener);
+		intermediate.addActionListener(menuListener);
+		expert.addActionListener(menuListener);
+		exit.addActionListener(menuListener);
+		
 		menuBar.add(game);
 		menuBar.add(help);
+		
 		this.setJMenuBar(menuBar);
 	}
 	
@@ -145,19 +245,21 @@ public class MinesweeperGUI extends JFrame
 				listener.newGame();
 			}
 		});
+		
 		c.weightx = 1;
 		c.weighty = 1;
 		c.gridx = 0;
 		c.gridy = 0;
+		c.anchor = GridBagConstraints.WEST;
 		
 		north.add(counter, c);
 		
 		c.gridx = 1;
-		
+		c.anchor = GridBagConstraints.CENTER;
 		north.add(smiley, c);
 		
 		c.gridx = 2;
-		
+		c.anchor = GridBagConstraints.EAST;
 		north.add(timer, c);
 	}
 	
@@ -177,12 +279,39 @@ public class MinesweeperGUI extends JFrame
 		board.gameOver(won);
 	}
 	
+	public void setDifficulty(String difficulty)
+	{
+		switch (difficulty)
+		{
+			case "Beginner":
+				rows = cols = BEGINNERSIZE;
+				mineCount = BEGINNERMINECOUNT;
+				break;
+				
+			case "Intermediate":
+				rows = cols = INTERMEDIATE;
+				mineCount = INTERMEDIATEMINECOUNT;
+				break;
+				
+			case "Expert":
+				rows = EXPERTROWS;
+				cols = 2 * rows;
+				mineCount = EXPERTMINECOUNT;
+				break;
+		}
+		
+		board.setDifficulty(rows, cols, mineCount);
+		resizeBorder();
+		newGame();
+		this.pack();
+	}
+	
 	public void newGame()
 	{
 		board.newGame();
 		timer.reset();
 		smiley.reset();
-		counter.setCounter(10);
+		counter.reset(mineCount);
 		this.repaint();
 	}
 	

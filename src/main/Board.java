@@ -53,6 +53,23 @@ public class Board extends JPanel
 	}
 	
 	/**
+	 * Redraws the board with size and mine count
+	 * @param rows the number of rows in the grid
+	 * @param cols the number of columns in the grid
+	 * @param mines the number of mines in the grid
+	 */
+	public void setDifficulty(int rows, int cols, int mines)
+	{
+		removeAll();
+		rowCount = rows;
+		colCount = cols;
+		mineCount = mines;
+		cells = new Cell[rows][cols];
+		this.setLayout(new GridLayout(rowCount, colCount));
+		drawBoard();
+	}
+	
+	/**
 	 * Resets the grid to its initial state
 	 */
 	public void newGame()
@@ -235,6 +252,9 @@ public class Board extends JPanel
 			uncoverAll();
 	}
 	
+	/**
+	 * Flags all mined cells in the grid
+	 */
 	private void markAll()
 	{
 		for (Cell [] row : cells)
@@ -248,18 +268,25 @@ public class Board extends JPanel
 		repaint();
 	}
 	
+	/**
+	 * Uncovers all mined cells in the grid
+	 */
 	private void uncoverAll()
 	{
 		for (Cell [] row : cells)
 		{
 			for (Cell cell : row)
 			{
-				if (cell.isMined())
-					cell.uncover();
+				if (cell.isCovered())
+					cell.bombReveal();
+					
 			}
 		}
 	}
 	
+	/**
+	 * Cover all cells in the grid
+	 */
 	public void coverAll()
 	{
 		for (Cell [] row : cells)
@@ -271,9 +298,23 @@ public class Board extends JPanel
 		}
 	}
 	
+	/**
+	 * 
+	 * @param mineCount
+	 */
 	public void setMineCount(int mineCount)
 	{
 		this.mineCount = mineCount; 
+	}
+	
+	public int getWidth()
+	{
+		return 16 * colCount;
+	}
+	
+	public int getHeight()
+	{
+		return 16 * rowCount;
 	}
 	
 	@Override
