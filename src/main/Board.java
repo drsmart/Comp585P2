@@ -332,7 +332,6 @@ public class Board extends JPanel
 			}
 			board += "\n";
 		}
-		
 		return board;
 	}
 }
